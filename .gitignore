@@ -1,0 +1,8 @@
+.idea/*
+__/pycache/__
+.*
+*.pyc
+.gitignore
+*.sqlite3
+venv/
+*.pdf
