@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailroutablepage_tags wagtailimages_tags%}
+
+{% block content %}
+
+    <div class="container">
+        {% image self.banner_image width-1500 as img %}
+
+        {# Display Banner #}
+        <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: cover; height: 500px ; background-position: center center ; color: #fff !important"></div>
+
+    <h1> {{ self.custom_title }}</h1>
+    <div class="card-footer text-muted">
+            <div class="row">
+                <div class="col-lg-6 text-left">
+                    Category: {{ self.category }}
+                </div> <!--col-lg-6 text-left-->
+
+                <div class="col-lg-6 text-right">
+                    <i class="fas fa-book-open"></i> Published {{self.published_datetime}}
+                </div> <!--col-lg-6 text-left-->
+
+            </div> <!--row-->
+        </div> <!--card-footer text-muted-->
+
+
+    <div class="container mt-5 mb-5">
+        <div class="text-center">
+            {% if self.categories.count %}
+                <div style="padding: 0 20px 20px">
+                    {% for cat in self.categories.all %}
+                        <a href="?category={{ cat.slug }}">
+                            {{ cat.name }}
+                        </a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-center">
+                {% for iter in self.authors.all %}
+                {% image iter.author.image fill-50x50 as img %}
+                <div>
+                    <div>
+                        <img src="{{ img.url }}" class="rounded-circle" alt="{{ iter.author.name }}">
+                    </div>
+                    {% if iter.author.website %}
+                        <a href="{{ iter.author.website }}">
+                            {{ iter.author.name }}
+                        </a>
+                    {% else %}
+                        {{ iter.author.name }}
+                    {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+        <div>
+            <ul class="list-group">
+              <li href="#" class="list-group-item list-group-item-action active">
+                Event Date & Time
+              </li>
+
+              <li href="#" class="list-group-item list-group-item-action">Date: {{ self.date }}</li>
+              <li href="#" class="list-group-item list-group-item-action">Time: {{ self.time }}</li>
+            </ul>
+
+             <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    Detail
+                  </li>
+                  <li href="#" class="list-group-item list-group-item-action">
+                      speaker:
+                      {% for speaker in self.speakers.all  %}
+                          {{ speaker.name }},
+                      {% endfor %}
+                  </li>
+                  <li href="#" class="list-group-item list-group-item-action">
+                      Host: {{ self.host }}
+                  </li>
+                 <li href="#" class="list-group-item list-group-item-action">
+                      Co-Host: {{ self.co_host }}
+                 </li>
+             <li href="#" class="list-group-item list-group-item-action">
+                      Address: {{ self.address }}
+                 </li>
+             <li href="#" class="list-group-item list-group-item-action">
+                      City: {{ self.city }}
+                 </li>
+             <li href="#" class="list-group-item list-group-item-action">
+                      Country: {{ self.country }}
+                 </li>
+
+             </ul>
+
+        <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    Contact
+                  </li>
+
+                  <li href="#" class="list-group-item list-group-item-action">
+                      Mobile: {{ self.mobile }}
+                  </li>
+                 <li href="#" class="list-group-item list-group-item-action">
+                      Email: {{ self.email }}
+                 </li>
+
+            <li href="#" class="list-group-item list-group-item-action">
+                      Contact Link: {{ self.link }}
+                 </li>
+
+            <li href="#" class="list-group-item list-group-item-action">
+                      Submit Form Link: {{ self.submit_form_link }}
+                 </li>
+
+
+        </ul>
+
+
+            {% if self.more_detail %}
+             <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    More
+                  </li>
+                  <li href="#" class="list-group-item list-group-item-action">{{ self.more_detail |richtext}} </li>
+                </ul>
+            {% endif %}
+
+
+        </div>
+
+        <br/>
+
+
+    </div>
+
+    <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                {% for block in self.content %}
+                    {% include_block block %}
+                {% endfor %}
+            </div>
+    </div>
+
+
+
+     <br/>
+{% endblock content %}

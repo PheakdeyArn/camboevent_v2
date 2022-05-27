@@ -26,9 +26,22 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'home',
     'search',
+    'flex',
+    'streams',
+    'site_settings',
+    'subscribers',
+    'blog',
+    'menus',
+    'contact',
+    'content',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
+
+    # add odon
+    'wagtail.contrib.settings',
+    'wagtail.contrib.routable_page',
+    ##
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -48,6 +61,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'captcha',
+    'wagtailcaptcha',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +93,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'wagtail.contrib.settings.context_processors.settings',
             ],
         },
     },
@@ -168,3 +185,12 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+
+# Recaptcha settings
+# This key only allows localhost. For production, you'll want your own API keys.
+# You can get Recaptcha API key from google.com/recaptcha
+RECAPTCHA_PUBLIC_KEY = "6LfmZk4eAAAAABBTvxjM0JiuD6FtZzE7Mykz-vXi"
+RECAPTCHA_PRIVATE_KEY = "6LfmZk4eAAAAAHFaCbZtGCoT3IcMKXdV46_v_5Mn"
+NOCAPTCHA = True
+

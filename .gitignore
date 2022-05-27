@@ -3,6 +3,6 @@ __/pycache/__
 .*
 *.pyc
 .gitignore
-*.sqlite3
+#*.sqlite3
 venv/
 *.pdf

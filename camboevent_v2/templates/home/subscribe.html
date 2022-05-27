@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    @todo add a django form that lets people self subscribe to this website using Subscribers model
+
+    {{ test_context }}
+
+    <form action="{% url 'subscribe' %}" method="get">
+        <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+        <input type="submit" value="Search" class="button">
+    </form>
+
+
+{% endblock %}

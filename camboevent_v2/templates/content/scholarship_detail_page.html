@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailroutablepage_tags wagtailimages_tags%}
+
+{% block content %}
+
+    <div class="container">
+
+        {% image self.banner_image width-1500 as img %}
+
+        <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: cover; height: 500px ; background-position: center center ; color: #fff !important">
+        </div>
+
+        <h1> {{ self.custom_title }}</h1>
+
+        <div class="card-footer text-muted">
+            <div class="row">
+                <div class="col-lg-6 text-left">
+                    Category: {{ self.scholarship_category }}
+                </div> <!--col-lg-6 text-left-->
+
+                <div class="col-lg-6 text-right">
+                    <i class="fas fa-book-open"></i> Published {{self.published_datetime}}
+                </div> <!--col-lg-6 text-left-->
+
+            </div> <!--row-->
+        </div> <!--card-footer text-muted-->
+
+        <br/>
+
+    <div>
+        <ul class="list-group">
+              <li href="#" class="list-group-item list-group-item-action active">
+                Detail
+              </li>
+              <li href="#" class="list-group-item list-group-item-action">
+                  Host: {{ self.host }}
+              </li>
+             <li href="#" class="list-group-item list-group-item-action">
+                  Co-Host: {{ self.co_host }}
+             </li>
+         <li href="#" class="list-group-item list-group-item-action">
+                  Address: {{ self.address }}
+             </li>
+         <li href="#" class="list-group-item list-group-item-action">
+                  City: {{ self.city }}
+             </li>
+         <li href="#" class="list-group-item list-group-item-action">
+                  Country: {{ self.country }}
+             </li>
+
+         </ul>
+
+        <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    Exam Date & Time
+                  </li>
+                  <li href="#" class="list-group-item list-group-item-action">
+                      Date: {{ self.exam_date }}
+                  </li>
+                 <li href="#" class="list-group-item list-group-item-action">
+                      Time: {{ self.exam_time }}
+                 </li>
+
+        </ul>
+
+    <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    DeadLine Date & Time
+                  </li>
+                  <li href="#" class="list-group-item list-group-item-action">
+                      Date: {{ self.deadline_date }}
+                  </li>
+                 <li href="#" class="list-group-item list-group-item-action">
+                      Time: {{ self.deadline_time }}
+                 </li>
+
+        </ul>
+
+        <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    Contact
+                  </li>
+
+                  <li href="#" class="list-group-item list-group-item-action">
+                      Mobile: {{ self.mobile }}
+                  </li>
+                 <li href="#" class="list-group-item list-group-item-action">
+                      Email: {{ self.email }}
+                 </li>
+            <li href="#" class="list-group-item list-group-item-action">
+                      Contact Link: {{ self.link }}
+                 </li>
+
+            <li href="#" class="list-group-item list-group-item-action">
+                      Submit Form Link: {{ self.submit_form_link }}
+                 </li>
+
+        </ul>
+
+            {% if self.more_detail %}
+             <ul class="list-group">
+                  <li href="#" class="list-group-item list-group-item-action active">
+                    More
+                  </li>
+                  <li href="#" class="list-group-item list-group-item-action">{{ self.more_detail |richtext}} </li>
+                </ul>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <br/>
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                {% for block in self.content %}
+                    {% include_block block %}
+                {% endfor %}
+            </div>
+        </div>
+
+    <br/>
+
+      </div>
+
+{% endblock content %}
