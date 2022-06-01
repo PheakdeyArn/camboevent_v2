@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'menus',
     'contact',
     'content',
+    # 'users',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -64,6 +65,17 @@ INSTALLED_APPS = [
 
     'captcha',
     'wagtailcaptcha',
+    'users',
+
+    'django.contrib.sites',  # make sure sites is included
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # the social providers
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +89,18 @@ MIDDLEWARE = [
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 ROOT_URLCONF = 'camboevent_v2.urls'
 
@@ -99,8 +123,11 @@ TEMPLATES = [
     },
 ]
 
+SITE_ID = 1
+
 WSGI_APPLICATION = 'camboevent_v2.wsgi.application'
 
+AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -109,6 +136,20 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
     }
 }
 
@@ -193,4 +234,37 @@ BASE_URL = 'http://example.com'
 RECAPTCHA_PUBLIC_KEY = "6LfmZk4eAAAAABBTvxjM0JiuD6FtZzE7Mykz-vXi"
 RECAPTCHA_PRIVATE_KEY = "6LfmZk4eAAAAAHFaCbZtGCoT3IcMKXdV46_v_5Mn"
 NOCAPTCHA = True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+
+# Email confirmation
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[My Website]"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# After 10 failed login attempts, restrict logins for 30 minutes
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 1800
+ACCOUNT_PASSWORD_MIN_LENGTH = 12
+
+# Other settings
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
+
+# ACCOUNT_EMAIL_VERIFICATION = "none"
+
+
+
 
