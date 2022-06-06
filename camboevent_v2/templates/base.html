@@ -117,6 +117,7 @@
                     <li class="nav-item">
                         {% if request.user.is_authenticated %}
                             Hi {{ request.user.first_name }} {{ request.user.last_name }},
+                            Job: {{ request.user.job }}
                             <a href="{% url 'account_logout' %}" class="nav-link d-inline">Logout?</a>
                         {% else %}
                             Hi Guest!

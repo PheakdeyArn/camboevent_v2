@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # add odon
     'wagtail.contrib.settings',
     'wagtail.contrib.routable_page',
+    'django_extensions',
     ##
     'wagtail.embeds',
     'wagtail.sites',
@@ -262,6 +263,7 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
+ACCOUNT_FORMS = {'signup': 'users.forms.CustomSignupForm',}
 
 # ACCOUNT_EMAIL_VERIFICATION = "none"
 
