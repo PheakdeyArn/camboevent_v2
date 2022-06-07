@@ -7,16 +7,16 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
+from users.views import profile_view
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
 
     path('admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
-    path('account/', include('allauth.urls')),
+    path('account/', include('users.urls')),
 
     path('search/', search_views.search, name='search'),
-
 ]
 
 
