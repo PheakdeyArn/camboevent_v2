@@ -7,6 +7,7 @@ from wagtail.core.fields import StreamField, RichTextField
 from wagtail.images.edit_handlers import ImageChooserPanel
 from streams import blocks
 from django.utils import timezone
+from users.models import User
 
 
 class ScholarshipDetailPage(Page):
@@ -88,6 +89,9 @@ class ScholarshipDetailPage(Page):
 
     more_detail = RichTextField(blank=True)
     link = models.URLField(blank=True, null=True)
+    submit_form_link = models.URLField(blank=True, null=True)
+
+    favourites = models.ManyToManyField(User, related_name='favourite_scholarship', default=None, blank=True)
 
     content = StreamField([
         ("title_and_text", blocks.TitleAndTextBlock()),
@@ -99,8 +103,6 @@ class ScholarshipDetailPage(Page):
         ("image_and_caption", blocks.ImageAndCaptionBlock()),
         ("carousel", blocks.CarouselBlock()),
     ], null=True, blank=True)
-
-    submit_form_link = models.URLField(blank=True, null=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('published_datetime'),
@@ -154,4 +156,18 @@ class ScholarshipDetailPage(Page):
         ),
         StreamFieldPanel("content"),
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        """ Adding custom stuff into our context"""
+        context = super().get_context(request, *args, **kwargs)
+        fav = False
+        if self.favourites.filter(id=request.user.id).exists():
+            fav = True
+
+        context["fav"] = fav
+        context["page_title"] = "Event List"
+
+        return context
+
+
 

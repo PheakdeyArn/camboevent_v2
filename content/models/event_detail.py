@@ -97,7 +97,7 @@ class EventDetailPage(Page):
     link = models.URLField(blank=True, null=True)
     submit_form_link = models.URLField(blank=True, null=True)
 
-    favourites = models.ManyToManyField(User, related_name='favourite', default=None, blank=True)
+    favourites = models.ManyToManyField(User, related_name='favourite_event', default=None, blank=True)
 
     content = StreamField([
         ("title_and_text", blocks.TitleAndTextBlock()),
@@ -171,15 +171,11 @@ class EventDetailPage(Page):
         # in order to access child properties, such as youtube_video_id and subtitle
         # context["events"] = EventDetailPage.objects.live().public()
 
-        # post = get_object_or_404(self, id=self.id)
-
         fav = False
-
         if self.favourites.filter(id=request.user.id).exists():
             fav = True
 
         context["fav"] = fav
-        # context["post"] = post
         context["page_title"] = "Event List"
 
         return context

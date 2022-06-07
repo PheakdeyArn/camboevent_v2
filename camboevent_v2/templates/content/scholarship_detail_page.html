@@ -13,6 +13,27 @@
 
         <h1> {{ self.custom_title }}</h1>
 
+        {% if request.user.is_authenticated %}
+
+          {% if fav %}
+          <div>
+            <a href="{% url 'favourite_scholarship_add' self.id %}" class="">Remove
+              Favourties</a>
+          </div>
+          {% else %}
+          <div>
+            <a href="{% url 'favourite_scholarship_add' self.id %}" class="">Add to
+              Favourties</a>
+          </div>
+          {% endif %}
+
+          {% else %}
+          <div>
+            <a href="{% url 'favourite_scholarship_add' %}" class="">Add to
+              Favourties</a>
+          </div>
+          {% endif %}
+
         <div class="card-footer text-muted">
             <div class="row">
                 <div class="col-lg-6 text-left">
