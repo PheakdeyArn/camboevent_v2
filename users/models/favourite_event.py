@@ -1,5 +1,5 @@
 from django.db import models
-from content.models.event_detail import EventDetailPage
+# from content.models.event_detail import EventDetailPage
 from wagtail.snippets.models import register_snippet
 
 

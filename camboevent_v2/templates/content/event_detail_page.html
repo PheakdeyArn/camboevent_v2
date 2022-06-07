@@ -11,6 +11,44 @@
         <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: cover; height: 500px ; background-position: center center ; color: #fff !important"></div>
 
     <h1> {{ self.custom_title }}</h1>
+
+{#    <div>#}
+{#        <a href="{% url 'favourite_event_add' self.id %}" class="">Add to Favourties</a>#}
+{#    </div>#}
+
+
+{#    {% if request.user.is_authenticated %}#}
+{#        <div>#}
+{#            <a href="{% url 'favourite_event_add' self.id %}" class="">Add to Favourties</a>#}
+{#        </div>#}
+{#        {% else %}#}
+{#         <div>#}
+{#            <a href="{% url 'account_login' %}" class="">Add to Favourties</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+
+    {% if request.user.is_authenticated %}
+
+      {% if fav %}
+      <div>
+        <a href="{% url 'favourite_event_add' self.id %}" class="">Remove
+          Favourties</a>
+      </div>
+      {% else %}
+      <div>
+        <a href="{% url 'favourite_event_add' self.id %}" class="">Add to
+          Favourties</a>
+      </div>
+      {% endif %}
+
+      {% else %}
+      <div>
+        <a href="{% url 'account_login' %}" class="">Add to
+          Favourties</a>
+      </div>
+      {% endif %}
+
+
     <div class="card-footer text-muted">
             <div class="row">
                 <div class="col-lg-6 text-left">
