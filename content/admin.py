@@ -1,3 +1,6 @@
 from django.contrib import admin
+from . import models
+# from mptt.admin import MPTTModelAdmin
 
-# Register your models here.
+# admin.site.register(models.CommentEvent, MPTTModelAdmin)
+

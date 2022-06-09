@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User
+from .models import User, CommentEvent
 
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
     modeladmin_register,
 )
+
+from mptt.admin import MPTTModelAdmin
+
 
 
 class UserAdmin(BaseUserAdmin):
@@ -65,3 +68,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 # modeladmin_register(UserAdmin)
+admin.site.register(CommentEvent, MPTTModelAdmin)

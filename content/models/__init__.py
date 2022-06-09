@@ -8,4 +8,6 @@ from .scholarship import ScholarshipListingPage
 from .scholarship_detail import ScholarshipDetailPage
 from .country import Country
 from .organization import Organization
+# from .comment import CommentEvent
+
 

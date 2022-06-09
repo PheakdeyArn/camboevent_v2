@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'wagtail.contrib.settings',
     'wagtail.contrib.routable_page',
     'django_extensions',
+    'mptt',
+
     ##
     'wagtail.embeds',
     'wagtail.sites',

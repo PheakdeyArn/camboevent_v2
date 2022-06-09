@@ -8,8 +8,12 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from streams import blocks
 from django.utils import timezone
 from users.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
+
+
+from users.forms import NewCommentForm
 
 
 class SpeakersOrderable(Orderable):
@@ -171,12 +175,46 @@ class EventDetailPage(Page):
         # in order to access child properties, such as youtube_video_id and subtitle
         # context["events"] = EventDetailPage.objects.live().public()
 
+        # get comment
+
+        allcomments = self.events_comments.filter(status=True)
+        #
+        print("+++++++++", allcomments)
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(allcomments, 10)
+        try:
+            comments = paginator.page(page)
+        except PageNotAnInteger:
+            comments = paginator.page(1)
+        except EmptyPage:
+            comments = paginator.page(paginator.num_pages)
+
         fav = False
         if self.favourites.filter(id=request.user.id).exists():
             fav = True
 
+        user_comment = None
+
+        if request.method == 'POST':
+            comment_form = NewCommentForm(request.POST)
+            comment_form.user = request.user
+
+            print("++++++++++++++++++", comment_form.fields)
+            if comment_form.is_valid():
+                # comment_form.user = request.user
+                user_comment = comment_form.save(commit=False)
+                user_comment.post = self
+                user_comment.save()
+                return HttpResponseRedirect('/')
+        else:
+            comment_form = NewCommentForm()
+
         context["fav"] = fav
         context["page_title"] = "Event List"
+        context["allcomments"] = allcomments
+        context["comments"] = comments
+        context["comment_form"] = comment_form
 
         return context
 
