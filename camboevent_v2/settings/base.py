@@ -142,6 +142,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

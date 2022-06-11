@@ -64,6 +64,7 @@ class EventListingPage(RoutablePageMixin, Page):
         paginator = Paginator(all_posts, 5)
         # Try to get the ?page=x value
         page = request.GET.get("page")
+        category = request.GET.get('category')
 
         try:
             # If the page exists and the ?page=x is an int
