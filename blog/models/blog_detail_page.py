@@ -27,6 +27,7 @@ class BlogDetailPage(Page):
     )
 
     categories = ParentalManyToManyField("blog.BlogCategory", blank=True)
+    tags = ParentalManyToManyField("blog.BlogTag", blank=True)
 
     content = StreamField([
         ("title_and_text", blocks.TitleAndTextBlock()),
@@ -50,6 +51,13 @@ class BlogDetailPage(Page):
                 FieldPanel("categories", widget=forms.CheckboxSelectMultiple)
             ],
             heading='Categories'
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("tags",
+                           widget=forms.CheckboxSelectMultiple)
+            ],
+            heading="Tags"
         ),
         StreamFieldPanel("content"),
     ]

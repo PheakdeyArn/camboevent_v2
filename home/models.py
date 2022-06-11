@@ -19,9 +19,10 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from rest_framework.fields import Field
-
+from blog.models import BlogDetailPage
 from streams import blocks
 from blog.models import BlogDetailPage
+from search.views import get_recent_blogs
 
 
 class HomePageCarouselImages(Orderable):
@@ -88,8 +89,15 @@ class HomePage(RoutablePageMixin, Page):
         # "posts" will have child pages; you'll need to use .specific in the template
         # in order to access child properties, such as youtube_video_id and subtitle
 
+        # get News
+        # latest_news = BlogDetailPage.objects.live().filter(categories='news').order_by('-first_published_at')
+        recent_news_blogs = BlogDetailPage.objects.live().public().order_by(
+                        'first_published_at')
+
+        context['recent_news_blogs'] = recent_news_blogs
         # fetch 5 recent posts
         context['recent_blogs_dict'] = "recent Blog"
-        context['recent_news_blogs'] = "recent news"
+        # context['recent_news_blogs'] = "recent news"
+        context['latest_news'] = 'latest_news'
 
         return context

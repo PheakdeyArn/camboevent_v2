@@ -5,8 +5,10 @@ from wagtail.admin.edit_handlers import FieldPanel
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.snippets.models import register_snippet
 
-
+from .blog_detail_page import BlogDetailPage
+from .blog_category import BlogCategory
 
 
 class BlogListingPage(RoutablePageMixin, Page):

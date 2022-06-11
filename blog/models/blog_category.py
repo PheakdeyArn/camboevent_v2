@@ -1,5 +1,6 @@
 from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.snippets.models import register_snippet
 
 
 class BlogCategory(models.Model):
@@ -26,3 +27,5 @@ class BlogCategory(models.Model):
     def __str__(self):
         return self.name
 
+
+register_snippet(BlogCategory)
