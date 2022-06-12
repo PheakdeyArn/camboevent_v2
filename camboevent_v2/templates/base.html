@@ -1,378 +1,241 @@
-{% load static wagtailcore_tags wagtailuserbar menus_tags %}
-
-{#{% get_menu "main" as navigation %}#}
-
-{% get_all_menus as all_menus %}
+{% load static %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="utf-8"/>
-    <title>
-        {% block title %}
-            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-        {% endblock %}
-        {% block title_suffix %}
-            {% wagtail_site as current_site %}
-            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
-        {% endblock %}
-    </title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-{# Global stylesheets #}
-<!--        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/Eyjjafjallajokull/pen/KddvMe?depth=everything&order=popularity&page=34&q=thumbnail&show_forks=false" />
-
-        <link rel='stylesheet prefetch' href='//cdnjs.cloudflare.com/ajax/libs/flickity/1.1.0/flickity.min.css'><link rel='stylesheet prefetch' href='//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,300italic,300'>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
-              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-        <link rel="stylesheet" type="text/css" href="{% static 'css/salacms.css' %}"><!-- must come before bootstrap_lux-->
-       <!-- must come before bootstrap_lux-->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap_lux.css' %}">
-
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" type="text/css" href="{% static 'css/camboevent.css' %}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>24 News — Free Website Template, Free HTML5 Template by FreeHTML5.co</title>
 
 
+    {#   Import static files #}
+    <link href="{% static 'css/media_query.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link href="{% static 'css/owl.carousel.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/owl.theme.default.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/style_1.css' %}" rel="stylesheet" type="text/css"/>
 
-    {% block extra_css %}
-            {# Override this in templates to add extra stylesheets #}
-          <style>
-            .footer {
-              position: fixed;
-              left: 0;
-              bottom: 0;
-              width: 100%;
-              background-color: red;
-              color: white;
-              text-align: center;
-            }
-          </style>
-        {% endblock %}
+    <!-- Modernizr JS -->
+{#    <script src="{% static 'js/modernizr-3.5.0.min.js' %}"></script>#}
 
 </head>
-
-<body class="{% block body_class %}{% endblock %}">
-{% wagtailuserbar %}
-
-<div class="container">
-
-        <!--Menus aka Navigation Bar-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand text-uppercase" href="#">Camboevent</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
-                        aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarColor03">
-                    <ul class="navbar-nav mr-auto">
-
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/" target="_top"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        {% for main_menu in all_menus %}
-
-                        {% get_menu main_menu.title as navigation %}
-                        {# get_menu = calling func get_menu() with arg='main' #}
-
-                        {% if not main_menu.menu_items.all %}
-                            <li>
-                                <a href="/{{ navigation.title }}" class="nav-link">{{ navigation.title }}</a>
-                            </li>
-
-                        {% else %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                                   aria-haspopup="true" aria-expanded="false">{{ main_menu.title }}</a>
-                                <div class="dropdown-menu">
-                                    {% for item in main_menu.menu_items.all %}
-                                    <a href="{{ item.link }}" class="dropdown-item nav-link"{% if item.open_in_new_tab %} target="_blank"{% endif %}>{{ item.title }}</a>
-                                    {% endfor %}
-                                </div>
-                            </li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
+<body>
+<div class="container-fluid fh5co_header_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 fh5co_mediya_center"><a href="#" class="color_fff fh5co_mediya_setting"><i
+                    class="fa fa-clock-o"></i>&nbsp;&nbsp;&nbsp;Friday, 5 January 2018</a>
+                <div class="d-inline-block fh5co_trading_posotion_relative"><a href="#" class="treding_btn">Trending</a>
+                    <div class="fh5co_treding_position_absolute"></div>
                 </div>
+                <a href="#" class="color_fff fh5co_mediya_setting">Instagram’s big redesign goes live with black-and-white app</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-             <ul class="navbar-nav">
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated %}
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Hi {{ request.user.first_name }} {{ request.user.last_name }}, ID: {{ request.user.id }}
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{% url 'account_profile' %}">Dashboard</a>
-                                        <a class="dropdown-item" href="{% url 'favourite_event_list' %}">Favourite</a>
-                                        <a class="dropdown-item" href="#">Saved Posts</a>
-                                        <a class="dropdown-item" href="#">Change Password</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="{% url 'account_logout' %}" class="nav-link d-inline">Logout?</a>
-                                    </div>
-                                </li>
 
-                        {% else %}
-                            <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Hi Guest!
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    </div>
-                                </li>
-                            <a href="{% url 'account_login' %}" class="nav-link d-inline">Login?</a>
-                        {% endif %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-3 fh5co_padding_menu">
+                <img src="images/logo.png" alt="img" class="fh5co_logo_width"/>
+            </div>
+            <div class="col-12 col-md-9 align-self-center fh5co_mediya_right">
+                <div class="text-center d-inline-block">
+                    <a class="fh5co_display_table"><div class="fh5co_verticle_middle"><i class="fa fa-search"></i></div></a>
+                </div>
+                <div class="text-center d-inline-block">
+                    <a class="fh5co_display_table"><div class="fh5co_verticle_middle"><i class="fa fa-linkedin"></i></div></a>
+                </div>
+                <div class="text-center d-inline-block">
+                    <a class="fh5co_display_table"><div class="fh5co_verticle_middle"><i class="fa fa-google-plus"></i></div></a>
+                </div>
+                <div class="text-center d-inline-block">
+                    <a href="https://twitter.com/fh5co" target="_blank" class="fh5co_display_table"><div class="fh5co_verticle_middle"><i class="fa fa-twitter"></i></div></a>
+                </div>
+                <div class="text-center d-inline-block">
+                    <a href="https://fb.com/fh5co" target="_blank" class="fh5co_display_table"><div class="fh5co_verticle_middle"><i class="fa fa-facebook"></i></div></a>
+                </div>
+                <!--<div class="d-inline-block text-center"><img src="images/country.png" alt="img" class="fh5co_country_width"/></div>-->
+                <div class="d-inline-block text-center dd_position_relative ">
+                    <select class="form-control fh5co_text_select_option">
+                        <option>English </option>
+                        <option>French </option>
+                        <option>German </option>
+                        <option>Spanish </option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid bg-faded fh5co_padd_mediya padding_786">
+    <div class="container padding_786">
+        <nav class="navbar navbar-toggleable-md navbar-light ">
+            <button class="navbar-toggler navbar-toggler-right mt-3" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation"><span class="fa fa-bars"></span></button>
+            <a class="navbar-brand" href="#"><img src="images/logo.png" alt="img" class="mobile_logo_width"/></a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                     </li>
-                </ul>
-            </nav> <!--navbar navbar-expand-lg navbar-light bg-light-->
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#">Blog <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#">Single <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton2" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">World <span class="sr-only">(current)</span></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_1">
+                            <a class="dropdown-item" href="#">Action in</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
 
-</div> <!--container-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton3" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">Community<span class="sr-only">(current)</span></a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_1">
+                            <a class="dropdown-item" href="#">Action in</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="Contact_us.html">Contact <span class="sr-only">(current)</span></a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
 
 {% block content %}{% endblock %}
 
-{#<div class="container">#}
-{#    <div class="row">#}
-{#        <div class="col-lg-12 text-center">#}
-{#            {% if settings.site_settings.SocialMediaSettings.facebook %}#}
-{#                <a href="{{ settings.site_settings.SocialMediaSettings.facebook }}">#}
-{#                    <i class="fab fa-facebook-f"></i>#}
-{#                </a>#}
-{#            {% endif %}#}
-{#            {% if settings.site_settings.SocialMediaSettings.twitter %}#}
-{#                <a href="{{ settings.site_settings.SocialMediaSettings.twitter }}">#}
-{#                    <i class="fab fa-twitter"></i>#}
-{#                </a>#}
-{#            {% endif %}#}
-{#            {% if settings.site_settings.SocialMediaSettings.youtube %}#}
-{#                <a href="{{ settings.site_settings.SocialMediaSettings.youtube }}">#}
-{#                    <i class="fab fa-youtube"></i>#}
-{#                </a>#}
-{#            {% endif %}#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
 
- <!-- Footer Area-->
-        <footer class="py-3 bg-dark">
-            <div class="container">
-                  <div class="row">
-
-                      <div class="col-md-3">
-                        <h4 class="text-uppercase text-left" style="color: whitesmoke;">News</h4>
-                        <a class="lead mb-0 text-center text-white" style="color: cornsilk;" href="/news/latest">Latest News</a><br>
-                        <a class="lead mb-0 text-center text-white" style="color: cornsilk;" href="/news/popular">Popular News</a> <br>
-                      </div>
-
-                      <div class="col-md-3">
-                        <h4 class="text-uppercase text-left" style="color: whitesmoke;">Learning</h4>
-
-                          {#Rendering Programming Sub-menus#}
-{#                          {% get_menu "programming" as menu %}#}
-{#                           {% if menu %}#}
-{#                              {% for item in menu.menu_items.all %}#}
-{#                                    <a href="{{item.link}}" class="lead mb-0 text-center text-white" style="color: cornsilk;">#}
-{#                                        {{ item.title }}#}
-{#                                    </a>#}
-{#                                    <br>#}
-{#                             {% endfor %}#}
-{#                           {% endif %}#}
-
-                          {#Rendering System Sub-menus#}
-{#                          {% get_menu "system" as menu %}#}
-{#                           {% if menu %}#}
-{#                              {% for item in menu.menu_items.all %}#}
-{#                                    <a href="{{item.link}}" class="lead mb-0 text-center text-white" style="color: cornsilk;">#}
-{#                                        {{ item.title }}#}
-{#                                    </a>#}
-{#                                    <br>#}
-{#                             {% endfor %}#}
-{#                           {% endif %}#}
-
-                          {#Rendering networking Sub-menus#}
-{#                          {% get_menu "networking" as menu %}#}
-{#                           {% if menu %}#}
-{#                              {% for item in menu.menu_items.all %}#}
-{#                                    <a href="{{item.link}}" class="lead mb-0 text-center text-white" style="color: cornsilk;">#}
-{#                                        {{ item.title }}#}
-{#                                    </a>#}
-{#                                    <br>#}
-{#                             {% endfor %}#}
-{#                           {% endif %}#}
-
-
-
-                      </div>
-                      <div class="col-md-3">
-                        <h4 class="text-uppercase text-left" style="color: whitesmoke;">Services</h4>
-                        <a class="lead mb-0 text-center text-white" style="color: cornsilk;" href="#!">Cloud ERP</a><br>
-                        <a class="lead mb-0 text-center text-white" style="color: cornsilk;" href="#!">Web Hosting</a> <br>
-                        <a class="lead mb-0 text-center text-white" style="color: cornsilk;" href="#!">Networking</a>
-                      </div>
-
-                      <div class="col-md-3">
-                          <h4 class="text-uppercase text-left" style="color:whitesmoke;">Contact US </h4>
-                          <p class="lead mb-0 text-left text-white">
-                              {% if settings.site_settings.ContactSettings.address %}
-                              Address: {{settings.site_settings.ContactSettings.address }}
-                              {%endif%}
-
-                              <br>
-                              {% if settings.site_settings.ContactSettings.phone1 %}
-                              Tel: {{settings.site_settings.ContactSettings.phone1 }}
-                              {%endif%}
-
-                              <br/>
-                              {% if settings.site_settings.ContactSettings.global_email %}
-                              Email:
-                              <a class="text-left text-white"
-                                 href="mailto:{{settings.site_settings.ContactSettings.global_email }}">
-                                  {{settings.site_settings.ContactSettings.global_email }}
-                              </a>
-                              {%endif%}
-                          </p>
-                          <br>
-                          <h4 class="text-uppercase text-left" style="color:whitesmoke;">Follow Us</h4>
-                            <div class="row">
-                                <div class="col-lg-12 text-center">
-                                    {% if settings.site_settings.SocialMediaSettings.facebook %}
-                                        <a href="{{ settings.site_settings.SocialMediaSettings.facebook }}">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    {% endif %}
-                                    {% if settings.site_settings.SocialMediaSettings.twitter %}
-                                        <a href="{{ settings.site_settings.SocialMediaSettings.twitter }}">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    {% endif %}
-                                    {% if settings.site_settings.SocialMediaSettings.youtube %}
-                                        <a href="{{ settings.site_settings.SocialMediaSettings.youtube }}">
-                                            <i class="fab fa-youtube"></i>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                          <div class="text-left social-icons-list">
-                              <ul>
-                                  {% if settings.site_settings.ContactSettings.linked_in %}
-                                  <li style="background:#0e76a8;">
-                                      <a href="{{settings.site_settings.ContactSettings.linked_in}}" target="_blank">
-                                          <i class="fa fa-linkedin"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.facebook %}
-                                  <li style="background:#3b5999;">
-                                      <a href="{{settings.site_settings.ContactSettings.facebook}}" target="_blank">
-                                          <i class="fa fa-facebook"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.instagram %}
-                                  <li style="background:#fe4164;">
-                                      <a href="{{settings.site_settings.ContactSettings.instagram}}" target="_blank">
-                                          <i class="fa fa-instagram"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.twitter %}
-                                  <li style="background:#00acee;">
-                                      <a href="{{settings.site_settings.ContactSettings.twitter}}" target="_blank">
-                                          <i class="fa fa-twitter"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.youtube %}
-                                  <li style="background:#c4302b;">
-                                      <a href="{{settings.site_settings.ContactSettings.youtube}}" target="_blank">
-                                          <i class="fa fa-youtube"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.telegram %}
-                                  <li style="background:#0088cc;">
-                                      <a href="{{settings.site_settings.ContactSettings.telegram}}" target="_blank">
-                                          <i class="fa fa-telegram"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.skype %}
-                                  <li style="background:#00aff0;">
-                                      <a href="{{settings.site_settings.ContactSettings.skype}}" target="_blank">
-                                          <i class="fa fa-skype"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.line %}
-                                  <li style="background:#00B900;">
-                                      <a href="{{settings.site_settings.ContactSettings.line}}" target="_blank">
-                                          <i class="fab fa-line"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                                  {% if settings.site_settings.ContactSettings.whatsapp %}
-                                  <li style="background:#075e54;">
-                                      <a href="{{settings.site_settings.ContactSettings.whatsapp}}" target="_blank">
-                                          <i class="fa fa-whatsapp"></i>
-                                      </a>
-                                  </li>
-                                  {% endif %}
-
-                              </ul>
-                          </div>
-
-                      </div>
-                  </div>
-            <p class="m-0 text-center text-white">
-                Copyright &copy; {% if settings.site_settings.ContactSettings.global_website %} {{settings.site_settings.ContactSettings.global_website }}{%endif%}
-            </p>
+<div class="container-fluid fh5co_footer_bg pb-z3">
+    <div class="container animate-box">
+        <div class="row">
+            <div class="col-12 spdp_right py-5"><img src="images/white_logo.png" alt="img" class="footer_logo"/></div>
+            <div class="clearfix"></div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="footer_main_title py-3"> About</div>
+                <div class="footer_sub_about pb-3"> Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                    unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </div>
+                <div class="footer_mediya_icon">
+                    <div class="text-center d-inline-block"><a class="fh5co_display_table_footer">
+                        <div class="fh5co_verticle_middle"><i class="fa fa-linkedin"></i></div>
+                    </a></div>
+                    <div class="text-center d-inline-block"><a class="fh5co_display_table_footer">
+                        <div class="fh5co_verticle_middle"><i class="fa fa-google-plus"></i></div>
+                    </a></div>
+                    <div class="text-center d-inline-block"><a class="fh5co_display_table_footer">
+                        <div class="fh5co_verticle_middle"><i class="fa fa-twitter"></i></div>
+                    </a></div>
+                    <div class="text-center d-inline-block"><a class="fh5co_display_table_footer">
+                        <div class="fh5co_verticle_middle"><i class="fa fa-facebook"></i></div>
+                    </a></div>
+                </div>
             </div>
-  <!-- container -->
-  </footer>
+            <div class="col-12 col-md-3 col-lg-2">
+                <div class="footer_main_title py-3"> Category</div>
+                <ul class="footer_menu">
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Business</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Entertainment</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Environment</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Health</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Life style</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Politics</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; Technology</a></li>
+                    <li><a href="#" class=""><i class="fa fa-angle-right"></i>&nbsp;&nbsp; World</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-5 col-lg-3 position_footer_relative">
+                <div class="footer_main_title py-3"> Most Viewed Posts</div>
+                <div class="footer_makes_sub_font"> Dec 31, 2016</div>
+                <a href="#" class="footer_post pb-4"> Success is not a good teacher failure makes you humble </a>
+                <div class="footer_makes_sub_font"> Dec 31, 2016</div>
+                <a href="#" class="footer_post pb-4"> Success is not a good teacher failure makes you humble </a>
+                <div class="footer_makes_sub_font"> Dec 31, 2016</div>
+                <a href="#" class="footer_post pb-4"> Success is not a good teacher failure makes you humble </a>
+                <div class="footer_position_absolute"><img src="images/footer_sub_tipik.png" alt="img" class="width_footer_sub_img"/></div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4 ">
+                <div class="footer_main_title py-3"> Last Modified Posts</div>
+                <a href="#" class="footer_img_post_6"><img src="images/allef-vinicius-108153.jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/32-450x260.jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/download (1).jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/science-578x362.jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/vil-son-35490.jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/zack-minor-15104.jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/download.jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/download (2).jpg" alt="img"/></a>
+                <a href="#" class="footer_img_post_6"><img src="images/ryan-moreno-98837.jpg" alt="img"/></a>
+            </div>
+        </div>
+        <div class="row justify-content-center pt-2 pb-4">
+            <div class="col-12 col-md-8 col-lg-7 ">
+                <div class="input-group">
+                    <span class="input-group-addon fh5co_footer_text_box" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                    <input type="text" class="form-control fh5co_footer_text_box" placeholder="Enter your email..." aria-describedby="basic-addon1">
+                    <a href="#" class="input-group-addon fh5co_footer_subcribe" id="basic-addon12"> <i class="fa fa-paper-plane-o"></i>&nbsp;&nbsp;Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid fh5co_footer_right_reserved">
+    <div class="container">
+        <div class="row  ">
+            <div class="col-12 col-md-6 py-4 Reserved"> © Copyright 2018, All rights reserved. Design by <a href="https://freehtml5.co" title="Free HTML5 Bootstrap templates">FreeHTML5.co</a>. </div>
+            <div class="col-12 col-md-6 spdp_right py-4">
+                <a href="#" class="footer_last_part_menu">Home</a>
+                <a href="Contact_us.html" class="footer_last_part_menu">About</a>
+                <a href="Contact_us.html" class="footer_last_part_menu">Contact</a>
+                <a href="blog.html" class="footer_last_part_menu">Latest News</a></div>
+        </div>
+    </div>
+</div>
 
-        <!--End Footer Area-->
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
 
- <!--End Footer Area-->
-        {# Global javascript #}
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous">
-        </script>
-
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-                integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-                crossorigin="anonymous">
-        </script>
-
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-                integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-                crossorigin="anonymous">
-        </script>
-
-        <script type="text/javascript" src="{% static 'js/salacms.js' %}"></script>
-
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+<!-- Waypoints -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Main -->
+<script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>
+
