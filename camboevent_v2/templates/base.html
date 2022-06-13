@@ -1,4 +1,8 @@
-{% load static %}
+{% load static wagtailcore_tags wagtailuserbar menus_tags %}
+
+{#{% get_menu "main" as navigation %}#}
+
+{% get_all_menus as all_menus %}
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -6,7 +10,15 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>24 News — Free Website Template, Free HTML5 Template by FreeHTML5.co</title>
+    <title>
+        {% block title %}
+            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+            {% wagtail_site as current_site %}
+            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+        {% endblock %}
+    </title>
 
 
     {#   Import static files #}
@@ -45,7 +57,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-3 fh5co_padding_menu">
-                <img src="images/logo.png" alt="img" class="fh5co_logo_width"/>
+{#                <img src="images/logo.png" alt="img" class="fh5co_logo_width"/>#}
+                <h3>CamboEvent</h3>
+
             </div>
             <div class="col-12 col-md-9 align-self-center fh5co_mediya_right">
                 <div class="text-center d-inline-block">
@@ -87,48 +101,78 @@
                     aria-label="Toggle navigation"><span class="fa fa-bars"></span></button>
             <a class="navbar-brand" href="#"><img src="images/logo.png" alt="img" class="mobile_logo_width"/></a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                 <ul class="navbar-nav mr-auto">
 
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#">Blog <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#">Single <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton2" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">World <span class="sr-only">(current)</span></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_1">
-                            <a class="dropdown-item" href="#">Action in</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton3" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">Community<span class="sr-only">(current)</span></a>
+                    {% for main_menu in all_menus %}
 
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_1">
-                            <a class="dropdown-item" href="#">Action in</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
+                        {% get_menu main_menu.title as navigation %}
+                        {# get_menu = calling func get_menu() with arg='main' #}
+
+                        {% if not main_menu.menu_items.all %}
+                            <li>
+                                <a href="/{{ navigation.title }}" class="nav-link">{{ navigation.title }}</a>
+                            </li>
+
+                        {% else %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false">{{ main_menu.title }}</a>
+                                <div class="dropdown-menu">
+                                    {% for item in main_menu.menu_items.all %}
+                                    <a href="{{ item.link }}" class="dropdown-item"{% if item.open_in_new_tab %} target="_blank"{% endif %}>{{ item.title }}</a>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
 
                     <li class="nav-item ">
-                        <a class="nav-link" href="Contact_us.html">Contact <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Contact <span class="sr-only">(current)</span></a>
                     </li>
+
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                        {% if request.user.is_authenticated %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Hi {{ request.user.first_name }} {{ request.user.last_name }}, ID: {{ request.user.id }}
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{% url 'account_profile' %}">Dashboard</a>
+                                        <a class="dropdown-item" href="{% url 'favourite_event_list' %}">Favourite</a>
+                                        <a class="dropdown-item" href="#">Saved Posts</a>
+                                        <a class="dropdown-item" href="#">Change Password</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{% url 'account_logout' %}" class="nav-link d-inline">Logout?</a>
+                                    </div>
+                                </li>
+
+                        {% else %}
+                            <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Hi Guest!
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    </div>
+                                </li>
+                            <a href="{% url 'account_login' %}" class="nav-link d-inline">Login?</a>
+                        {% endif %}
+                    </li>
+                </ul>
 
                 </ul>
             </div>
         </nav>
     </div>
 </div>
-
 {% block content %}{% endblock %}
 
 

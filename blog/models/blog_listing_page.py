@@ -37,7 +37,7 @@ class BlogListingPage(RoutablePageMixin, Page):
         # Get all posts
         all_posts = BlogDetailPage.objects.live().public().order_by('-first_published_at')
         # Paginate all posts by 2 per page
-        paginator = Paginator(all_posts, 2)
+        paginator = Paginator(all_posts, 5)
         # Try to get the ?page=x value
         page = request.GET.get("page")
         try:
