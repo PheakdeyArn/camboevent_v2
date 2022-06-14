@@ -4,64 +4,89 @@
 
 {% block content %}
 
-<div class="container">
-    <section class="jumbotron text-center bg-white">
-        <div class="container">
-            <h1>Users saved favourite posts</h1>
-            <p class="lead text-muted">Here you can remove or view the favourites posts you have added</p>
-        </div>
-    </section>
-    <div>
+    <div class="container">
 
-        <h2> Favourite Events</h2>
-        <div class="row">
-            {% for post in fav_events %}
-             <div class="col-md-4">
-              {% image post.banner_image width-1500 as img %}
-                <a class="text-dark" href="{{post.get_absolute_url}}">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="{{ img.url }}" alt="{{ post.title }}">
-                        <div class="card-body">
-                            <h2 style="font-size:18px;font-weight:bold">{{post.title|truncatechars:50}}</h2>
-                            <p class="card-text">{{post.excerpt|truncatechars:50}}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">9 mins</small>
-                                <div id="favourite-section"><a href="{% url 'favourite_event_add' post.id %}"
-                                        class="btn btn-outline-primary">Remove</a></div>
+        <!-- Favorite Event Section-->
+        <div class="container-fluid pb-4 pt-5">
+            <div class="container animate-box">
+                <div>
+                    <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Favourite Events</div>
+                </div>
+                <div class="owl-carousel owl-theme" id="slider2">
+                    {% for post in fav_events %}
+                        <div class="item px-2">
+                            {% image post.banner_image fill-250x250 as post_img %}
+                            <div class="fh5co_hover_news_img">
+                                <div class="fh5co_news_img"><img src="{{ post_img.url }}" alt=""/></div>
+                                <div>
+                                    <a href="{{ post.url }}" class="d-block fh5co_small_post_heading"><span
+                                            class="">{{ post.title }}</span></a>
+                                    <div class="c_g"><i class="fa fa-clock-o"></i> {{ post.first_published_at }}</div>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">9 mins</small>
+                                        <div id="favourite-section"><a href="{% url 'favourite_event_add' post.id %}"
+                                                                       class="btn btn-outline-primary">Remove</a></div>
+                                    </div>
+
+                                </div>
+
                             </div>
-
                         </div>
+                    {% endfor %}
+
+                    <div>
+
                     </div>
-                </a>
+                </div>
+                <div class="col-12 col-md-12 spdp_right">
+                    <a href="{% url 'favourite_events' %}" class="fh5co_mini_time py-3"> See All </a>
+                </div>
             </div>
-            {% endfor %}
         </div>
 
-        <h2> Favourite Scholarship</h2>
-        <div class="row">
-            {% for post in fav_scholarships %}
-             <div class="col-md-4">
-              {% image post.banner_image width-1500 as img %}
-                <a class="text-dark" href="{{post.get_absolute_url}}">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="{{ img.url }}" alt="{{ post.title }}">
-                        <div class="card-body">
-                            <h2 style="font-size:18px;font-weight:bold">{{post.title|truncatechars:50}}</h2>
-                            <p class="card-text">{{post.excerpt|truncatechars:50}}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">9 mins</small>
-                                <div id="favourite-section"><a href="{% url 'favourite_event_add' post.id %}"
-                                        class="btn btn-outline-primary">Remove</a></div>
-                            </div>
+        <!-- Favorite Scholarships-->
+        <div class="container-fluid pb-4 pt-5">
+            <div class="container animate-box">
+                <div>
+                    <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Favourite Scholarship</div>
+                </div>
+                <div class="owl-carousel owl-theme" id="slider3">
+                    {% for post in fav_scholarships %}
+                        <div class="item px-2">
+                            {% image post.banner_image fill-250x250 as post_img %}
+                            <div class="fh5co_hover_news_img">
+                                <div class="fh5co_news_img"><img src="{{ post_img.url }}" alt=""/></div>
+                                <div>
+                                    <a href="{{ post.url }}" class="d-block fh5co_small_post_heading"><span
+                                            class="">{{ post.title }}</span></a>
+                                    <div class="c_g"><i class="fa fa-clock-o"></i> {{ post.first_published_at }}</div>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">9 mins</small>
+                                        <div id="favourite-section"><a href="{% url 'favourite_event_add' post.id %}"
+                                                                       class="btn btn-outline-primary">Remove</a></div>
+                                    </div>
 
+                                </div>
+
+                            </div>
                         </div>
+                    {% endfor %}
+
+                    <div>
+
                     </div>
-                </a>
+                </div>
+                <div class="col-12 col-md-12 spdp_right">
+                    <a href="{% url 'favourite_scholarships' %}" class="fh5co_mini_time py-3"> See All </a>
+                </div>
             </div>
-            {% endfor %}
         </div>
 
     </div>
-</div>
+
 
 {% endblock %}

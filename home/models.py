@@ -23,6 +23,7 @@ from blog.models import BlogDetailPage
 from streams import blocks
 from blog.models import BlogDetailPage
 from search.views import get_recent_blogs
+from content.models import EventDetailPage, ScholarshipDetailPage
 
 
 class HomePageCarouselImages(Orderable):
@@ -88,16 +89,21 @@ class HomePage(RoutablePageMixin, Page):
         context = super().get_context(request, *args, **kwargs)
         # "posts" will have child pages; you'll need to use .specific in the template
         # in order to access child properties, such as youtube_video_id and subtitle
+        limit_top = 5
 
         # get News
         # latest_news = BlogDetailPage.objects.live().filter(categories='news').order_by('-first_published_at')
         recent_news_blogs = BlogDetailPage.objects.live().public().order_by(
-                        'first_published_at')
+                        'first_published_at')[:limit_top][::-1]
+
+        recent_events = EventDetailPage.objects.live().public().order_by(
+            'first_published_at')[:limit_top][::-1]
+
+        recent_scholarships = ScholarshipDetailPage.objects.live().public().order_by(
+            'first_published_at')[:limit_top][::-1]
 
         context['recent_news_blogs'] = recent_news_blogs
-        # fetch 5 recent posts
-        context['recent_blogs_dict'] = "recent Blog"
-        # context['recent_news_blogs'] = "recent news"
-        context['latest_news'] = 'latest_news'
+        context['recent_events'] = recent_events
+        context['recent_scholarships'] = recent_scholarships
 
         return context
