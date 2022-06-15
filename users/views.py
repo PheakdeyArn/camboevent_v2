@@ -15,8 +15,8 @@ def profile_view(request):
 
 @ login_required
 def favourite_contents(request):
-    fav_events = EventDetailPage.objects.filter(favourites=request.user)[:4]
-    fav_scholarships = ScholarshipDetailPage.objects.filter(favourites=request.user)[:4]
+    fav_events = EventDetailPage.objects.filter(favourites=request.user)[:5]
+    fav_scholarships = ScholarshipDetailPage.objects.filter(favourites=request.user)[:5]
     return render(
         request,
         'account/favourites.html',
