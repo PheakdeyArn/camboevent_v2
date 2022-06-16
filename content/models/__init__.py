@@ -10,4 +10,6 @@ from .country import Country
 from .organization import Organization
 # from .comment import CommentEvent
 
+from .like import EventLikes, ScholarshipLikes
+
 

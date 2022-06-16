@@ -9,6 +9,8 @@ from streams import blocks
 from django.utils import timezone
 from users.models import User
 
+from .like import ScholarshipLikes
+
 
 class ScholarshipDetailPage(Page):
 
@@ -160,6 +162,11 @@ class ScholarshipDetailPage(Page):
     def get_context(self, request, *args, **kwargs):
         """ Adding custom stuff into our context"""
         context = super().get_context(request, *args, **kwargs)
+
+        likes = ScholarshipLikes.objects.filter(post=self.id).count()
+        print("++++++++++++++++++++++++++++")
+        print(likes)
+
         fav = False
         if self.favourites.filter(id=request.user.id).exists():
             fav = True

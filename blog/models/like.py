@@ -1,5 +1,5 @@
 from django.db import models
-# from blog.models import BlogDetailPage
+# from .blog_detail_page import BlogDetailPage
 
 
 # create like news
@@ -9,7 +9,7 @@ class BlogLikes(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='like_user'
+        related_name='like_user_like'
     )
 
     blog = models.ForeignKey(
@@ -17,7 +17,7 @@ class BlogLikes(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='like_blog_like'
     )
 
     status = models.BooleanField(default=False, blank=False)
@@ -27,4 +27,3 @@ class BlogLikes(models.Model):
     class Meta:
         verbose_name = 'Blog Like'
         verbose_name_plural = 'Blog Likes'
-

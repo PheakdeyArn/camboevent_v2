@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User, CommentEvent, BlogLikes
+from .models import User, CommentEvent
 
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin,
@@ -66,17 +66,6 @@ class UserAdmin(BaseUserAdmin):
     # search_fields = ("email", "first_name", "last_name", "phone_number",)
 
 
-class BlogLikesAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'blog',
-        'status',
-        'created_at',
-        'updated_at'
-    )
-
-
 admin.site.register(User, UserAdmin)
-admin.site.register(BlogLikes, BlogLikesAdmin)
 # modeladmin_register(UserAdmin)
 admin.site.register(CommentEvent, MPTTModelAdmin)

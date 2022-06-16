@@ -2,6 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRe
 from django.contrib.auth.decorators import login_required
 from content.models import EventDetailPage, ScholarshipDetailPage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+# from users.models import BlogLikes
+
+
+# def get_blog_likes(id):
+#     likes = BlogLikes.objects.filter(id=id).count()
+#
+#     return likes
 
 
 @login_required

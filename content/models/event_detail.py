@@ -14,6 +14,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRe
 
 
 from users.forms import NewCommentForm
+from .like import EventLikes
 
 
 class SpeakersOrderable(Orderable):
@@ -176,6 +177,9 @@ class EventDetailPage(Page):
         # context["events"] = EventDetailPage.objects.live().public()
 
         # get comment
+        likes = EventLikes.objects.filter(post=self.id).count()
+        print("++++++++++++++++++++++++++++")
+        print(likes)
 
         allcomments = self.events_comments.filter(status=True)
         #

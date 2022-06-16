@@ -21,9 +21,11 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from rest_framework.fields import Field
 from blog.models import BlogDetailPage
 from streams import blocks
-from blog.models import BlogDetailPage
+from blog.models import BlogDetailPage, BlogLikes
 from search.views import get_recent_blogs
-from content.models import EventDetailPage, ScholarshipDetailPage
+from content.models import EventDetailPage, ScholarshipDetailPage, EventLikes, ScholarshipLikes
+
+
 
 
 class HomePageCarouselImages(Orderable):
@@ -90,6 +92,15 @@ class HomePage(RoutablePageMixin, Page):
         # "posts" will have child pages; you'll need to use .specific in the template
         # in order to access child properties, such as youtube_video_id and subtitle
         limit_top = 5
+
+        blog_likes = BlogLikes.objects.all().count()
+        event_likes = EventLikes.objects.all().count()
+        scholarship_likes = ScholarshipLikes.objects.all().count()
+
+        print("++++++++++++++++++++++++++++++++++++++++++++")
+        print("Blog Likes: ", blog_likes)
+        print("Events Likes: ", event_likes)
+        print("Scholarship Likes: ", scholarship_likes)
 
         # get News
         # latest_news = BlogDetailPage.objects.live().filter(categories='news').order_by('-first_published_at')

@@ -7,6 +7,8 @@ from streams import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
+from .like import BlogLikes
+
 
 class BlogDetailPage(Page):
     """ Parental Blog Detail Page """
@@ -61,4 +63,19 @@ class BlogDetailPage(Page):
         ),
         StreamFieldPanel("content"),
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        # get like
+        likes = BlogLikes.objects.filter(blog=self.id,).count()
+        # likes = BlogLikes.objects.filter(blog=self.id,).count()
+        # likes = get_blog_likes(self.id)
+        print("+++++++++++++++++++++++")
+        print(likes)
+
+        context["test"] = "test"
+        # context["test"] = "test"
+
+        return context
 

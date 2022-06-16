@@ -6,3 +6,4 @@ from .blog_article_page import ArticleBlogPage
 from .blog_video_page import VideoBlogPage
 from .blog_tag import BlogTag
 from .blog_tag import BlogTagsOrderable
+from .like import BlogLikes
