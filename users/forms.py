@@ -35,7 +35,6 @@ class NewCommentForm(forms.ModelForm):
         return super(NewCommentForm, self).save(*args, **kwargs)
 
 
-
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=100)
     last_name = forms.CharField(max_length=100)
