@@ -17,5 +17,4 @@ urlpatterns = [
     path('profile/favourite_shcolarships/', favourite_scholarships, name='favourite_scholarships'),
     path('fav_event/<int:id>', favourite_event_add, name='favourite_event_add'),
     path('fav_scholarship/<int:id>', favourite_scholarship_add, name='favourite_scholarship_add'),
-
 ]

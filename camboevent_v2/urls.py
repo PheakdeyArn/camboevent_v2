@@ -17,6 +17,7 @@ urlpatterns = [
     path('account/', include('users.urls')),
 
     path('search/', search_views.search, name='search'),
+    path('blog/', include('blog.urls')),
 ]
 
 

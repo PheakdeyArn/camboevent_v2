@@ -8,6 +8,23 @@
         {% image self.banner_image fill-1200x300 as banner %}
         <img src="{{ banner.url }}" alt="{{ banner.alt }}" style='width: 100%; height: auto;'>
 
+        <p>Is Like: {{ is_like }}</p>
+
+        {% if request.user.is_authenticated %}
+
+            {% if is_like %}
+                <a href="{% url 'like_blog_add' self.id %}" class="">Unlike</a>
+
+            {% else %}
+
+                 <a href="{% url 'like_blog_add' self.id %}" class="">like</a>
+                {% endif %}
+
+             {% else %}
+                <a href="{% url 'account_login' %}" class=""> Like</a>
+
+        {% endif %}
+
         <div class="container mt-5 mb-5">
             <div class="text-center">
                 <h1>{{ self.custom_title }}</h1>

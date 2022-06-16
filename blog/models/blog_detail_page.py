@@ -8,6 +8,7 @@ from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiField
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from .like import BlogLikes
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 class BlogDetailPage(Page):
@@ -69,13 +70,25 @@ class BlogDetailPage(Page):
 
         # get like
         likes = BlogLikes.objects.filter(blog=self.id,).count()
-        # likes = BlogLikes.objects.filter(blog=self.id,).count()
-        # likes = get_blog_likes(self.id)
+
+        # aa = get_object_or_404(BlogLikes, id=)
         print("+++++++++++++++++++++++")
         print(likes)
 
+        print("User: ", request.user.id)
+
+        is_like = False
+
+        user_blog_like = BlogLikes.objects.filter(blog_id=self.id, user=request.user.id, status=True)
+        user_blog_like_id = [x.blog_id for x in user_blog_like]
+
+        if self.id in user_blog_like_id:
+            is_like = True
+
+        print("IS Like: ", is_like)
+
         context["test"] = "test"
-        # context["test"] = "test"
+        context["is_like"] = is_like
 
         return context
 
