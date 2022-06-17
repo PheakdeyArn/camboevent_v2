@@ -13,6 +13,23 @@
 
         <h1> {{ self.custom_title }}</h1>
 
+    <p>Is Like: {{ is_like }}</p>
+
+        {% if request.user.is_authenticated %}
+
+            {% if is_like %}
+                <a href="{% url 'like_scholarship_add' self.id %}" class="">Unlike</a>
+
+            {% else %}
+
+                 <a href="{% url 'like_scholarship_add' self.id %}" class="">like</a>
+                {% endif %}
+
+             {% else %}
+                <a href="{% url 'account_login' %}" class=""> Like</a>
+
+        {% endif %}
+
         {% if request.user.is_authenticated %}
 
           {% if fav %}

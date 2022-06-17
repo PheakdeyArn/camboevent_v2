@@ -168,10 +168,19 @@ class ScholarshipDetailPage(Page):
         print(likes)
 
         fav = False
+        is_like = False
+
+        user_scholarship_like = ScholarshipLikes.objects.filter(post_id=self.id, user=request.user.id, status=True)
+        user_scholarship_like_id = [x.post_id for x in user_scholarship_like]
+
         if self.favourites.filter(id=request.user.id).exists():
             fav = True
 
+        if self.id in user_scholarship_like_id:
+            is_like = True
+
         context["fav"] = fav
+        context["is_like"] = is_like
         context["page_title"] = "Event List"
 
         return context
