@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('search/', search_views.search, name='search'),
     path('blog/', include('blog.urls')),
+    path('content/', include('content.urls')),
 ]
 
 

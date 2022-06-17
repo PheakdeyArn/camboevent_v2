@@ -195,8 +195,16 @@ class EventDetailPage(Page):
             comments = paginator.page(paginator.num_pages)
 
         fav = False
+        is_like = False
+
+        user_event_like = EventLikes.objects.filter(post_id=self.id, user=request.user.id, status=True)
+        user_event_like_id = [x.post_id for x in user_event_like]
+
         if self.favourites.filter(id=request.user.id).exists():
             fav = True
+
+        if self.id in user_event_like_id:
+            is_like = True
 
         user_comment = None
 
@@ -215,6 +223,7 @@ class EventDetailPage(Page):
             comment_form = NewCommentForm()
 
         context["fav"] = fav
+        context["is_like"] = is_like
         context["page_title"] = "Event List"
         context["allcomments"] = allcomments
         context["comments"] = comments
