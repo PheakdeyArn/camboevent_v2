@@ -1,7 +1,7 @@
 from django.db import models
 from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import RoutablePageMixin
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -9,6 +9,8 @@ from wagtail.snippets.models import register_snippet
 
 from .blog_detail_page import BlogDetailPage
 from .blog_category import BlogCategory
+from wagtail.core.fields import StreamField
+from streams import blocks
 
 
 class BlogListingPage(RoutablePageMixin, Page):
@@ -23,8 +25,28 @@ class BlogListingPage(RoutablePageMixin, Page):
         help_text='Overwrites the default title',
     )
 
+    category = models.ForeignKey(
+        "blog.BlogCategory",
+        blank=False,
+        null=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+    )
+
+    content = StreamField([
+        ("h2", blocks.H2Block()),
+        ("h3", blocks.H3Block()),
+        ("h4", blocks.H4Block()),
+        ("quote", blocks.QuoteBlock()),
+        ("carousel", blocks.CarouselBlock()),
+        ("cta", blocks.CTABlock()),
+    ], null=True, blank=True)
+
     content_panels = Page.content_panels + [
         FieldPanel("custom_title"),
+        FieldPanel("category", heading='Category'),
+        StreamFieldPanel("content"),
+
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -34,8 +56,13 @@ class BlogListingPage(RoutablePageMixin, Page):
         # in order to access child properties, such as youtube_video_id and subtitle
         # context["posts"] = BlogDetailPage.objects.live().public()
 
-        # Get all posts
-        all_posts = BlogDetailPage.objects.live().public().order_by('-first_published_at')
+        if self.category.slug not in ['all', "All"]:
+            all_posts = BlogDetailPage.objects.filter(categories=self.category.id).live().public().order_by('-first_published_at')
+
+        else:
+            # Get all posts
+            all_posts = BlogDetailPage.objects.live().public().order_by('-first_published_at')
+
         # Paginate all posts by 2 per page
         paginator = Paginator(all_posts, 5)
         # Try to get the ?page=x value

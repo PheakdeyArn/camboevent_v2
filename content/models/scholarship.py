@@ -13,7 +13,6 @@ from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel, MultiFieldPanel
 
-from .event import EventListingPage
 from content.models.scholarship_detail import ScholarshipDetailPage
 from django.shortcuts import get_object_or_404
 from .category import ScholarshipCategory
