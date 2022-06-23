@@ -38,3 +38,33 @@ class ListingPageSlider(Orderable):
         ImageChooserPanel("image"),
         PageChooserPanel('slider_cta'),
     ]
+
+
+class ScholarshipListingPageSlider(Orderable):
+
+    page = ParentalKey('content.NewScholarshipListingPage', related_name="scholarship_listing_page_sliders")
+
+    title = models.CharField(max_length=100, blank=True, null=True)
+    short_description = models.CharField(max_length=500, blank=True, null=True)
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    slider_cta = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('short_description'),
+        ImageChooserPanel("image"),
+        PageChooserPanel('slider_cta'),
+    ]

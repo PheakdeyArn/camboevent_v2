@@ -33,11 +33,11 @@ class ScholarshipDetailPage(Page):
     )
 
     category = models.ForeignKey(
-        "content.EventCategory",
+        "content.ScholarshipCategory",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='scholarship_category'
     )
     city = models.ForeignKey(
         'content.City',
@@ -54,13 +54,13 @@ class ScholarshipDetailPage(Page):
         related_name='+'
     )
 
-    scholarship_category = models.ForeignKey(
-        "content.ScholarshipCategory",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
+    # scholarship_category = models.ForeignKey(
+    #     "content.ScholarshipCategory",
+    #     null=True,
+    #     blank=True,
+    #     on_delete=models.SET_NULL,
+    #     related_name='+'
+    # )
 
     # Exam - Date & Time
     exam_date = models.DateField("Exam Date")
@@ -111,7 +111,8 @@ class ScholarshipDetailPage(Page):
         FieldPanel("custom_title"),
         # FieldPanel("test_field"),
         ImageChooserPanel("banner_image"),
-        FieldPanel('scholarship_category', heading="Category"),
+        FieldPanel('category', heading="Category"),
+        # FieldPanel('scholarship_category', heading="Category"),
         MultiFieldPanel(
             [
                 InlinePanel("authors", label="Author", min_num=1, max_num=4)
