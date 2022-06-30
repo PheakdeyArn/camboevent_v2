@@ -13,6 +13,15 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 @login_required
 def profile_view(request):
+
+    print("_________: ")
+
+    if request.user:
+        print("User okay")
+
+    else:
+        print("No user")
+    
     return render(
         request,
         'account/profile.html',

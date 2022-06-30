@@ -207,18 +207,15 @@ class EventDetailPage(Page):
             is_like = True
 
         user_comment = None
-
         if request.method == 'POST':
             comment_form = NewCommentForm(request.POST)
-            comment_form.user = request.user
-
-            print("++++++++++++++++++", comment_form.fields)
             if comment_form.is_valid():
-                # comment_form.user = request.user
                 user_comment = comment_form.save(commit=False)
                 user_comment.post = self
                 user_comment.save()
-                return HttpResponseRedirect('/')
+                # return HttpResponseRedirect('/', context)
+                # return redirect('/' + self.slug)
+
         else:
             comment_form = NewCommentForm()
 

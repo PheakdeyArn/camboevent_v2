@@ -69,6 +69,7 @@ class NewScholarshipListingPage(RoutablePageMixin, Page):
 
         print("+++++++++++++", self.category)
         print("+++++++++++++", self.category.slug)
+        categories = ScholarshipCategory.objects.all().order_by('name')
 
         all_category_list = ['all', 'All']
 
@@ -104,5 +105,6 @@ class NewScholarshipListingPage(RoutablePageMixin, Page):
             events = paginator.page(paginator.num_pages)
 
         context["posts"] = events
+        context["categories"] = categories
         context["page_title"] = "Scholarship List"
         return context

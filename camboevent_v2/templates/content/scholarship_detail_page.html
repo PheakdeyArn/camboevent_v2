@@ -13,8 +13,6 @@
 
         <h1> {{ self.custom_title }}</h1>
 
-    <p>Is Like: {{ is_like }}</p>
-
         {% if request.user.is_authenticated %}
 
             {% if is_like %}
@@ -51,18 +49,63 @@
           </div>
           {% endif %}
 
-        <div class="card-footer text-muted">
+    <div class="card-footer text-muted">
             <div class="row">
                 <div class="col-lg-6 text-left">
-                    Category: {{ self.scholarship_category }}
+                    Category: {{ self.category }}
                 </div> <!--col-lg-6 text-left-->
 
                 <div class="col-lg-6 text-right">
-                    <i class="fas fa-book-open"></i> Published {{self.published_datetime}}
+                    <i class="fas fa-book-open"></i> Published {{ self.published_datetime }}
                 </div> <!--col-lg-6 text-left-->
 
             </div> <!--row-->
-        </div> <!--card-footer text-muted-->
+        </div>
+
+    <div class="container mt-5 mb-5">
+            <div class="text-center">
+                {% if self.categories.count %}
+                    <div style="padding: 0 20px 20px">
+                        {% for cat in self.categories.all %}
+                            <a href="?category={{ cat.slug }}">
+                                {{ cat.name }}
+                            </a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="d-flex justify-content-center">
+                    {% for iter in self.authors.all %}
+                        {% image iter.author.image fill-50x50 as img %}
+                        <div>
+                            <div>
+                                <img src="{{ img.url }}" class="rounded-circle" alt="{{ iter.author.name }}">
+                            </div>
+                            {% if iter.author.website %}
+                                <a href="{{ iter.author.website }}">
+                                    {{ iter.author.name }}
+                                </a>
+                            {% else %}
+                                {{ iter.author.name }}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+{#        <div class="card-footer text-muted">#}
+{#            <div class="row">#}
+{#                <div class="col-lg-6 text-left">#}
+{#                    Category: {{ self.scholarship_category }}#}
+{#                </div> <!--col-lg-6 text-left-->#}
+{##}
+{#                <div class="col-lg-6 text-right">#}
+{#                    <i class="fas fa-book-open"></i> Published {{self.published_datetime}}#}
+{#                </div> <!--col-lg-6 text-left-->#}
+{##}
+{#            </div> <!--row-->#}
+{#        </div> <!--card-footer text-muted-->#}
 
         <br/>
 

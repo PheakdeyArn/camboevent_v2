@@ -69,6 +69,7 @@ class EventListingPage(RoutablePageMixin, Page):
         # context["events"] = EventDetailPage.objects.live().public()
 
         all_category_list = ['all', 'All']
+        # categories = EventCategory.objects.all().order_by('name')
 
         if self.category.slug not in all_category_list:
             all_posts = EventDetailPage.objects.filter(category=self.category).live().public().order_by(
@@ -106,5 +107,6 @@ class EventListingPage(RoutablePageMixin, Page):
             events = paginator.page(paginator.num_pages)
 
         context["posts"] = events
+        context["categories"] = categories
         context["page_title"] = "Event List"
         return context

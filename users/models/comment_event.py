@@ -11,7 +11,7 @@ class CommentEvent(MPTTModel):
                              on_delete=models.CASCADE,
                              related_name='events_comments')
     name = models.CharField(max_length=50)
-    user = models.ForeignKey(User, related_name='user_comment_event', on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, related_name='user_comment_event', on_delete=models.CASCADE)
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
                             null=True, blank=True, related_name='children')
     email = models.EmailField()

@@ -24,4 +24,4 @@ class FavouriteScholarship(models.Model):
         ordering = ['id']
 
 
-register_snippet(FavouriteScholarship)
+# register_snippet(FavouriteScholarship)

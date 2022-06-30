@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailroutablepage_tags wagtailimages_tags%}
+{% load wagtailcore_tags wagtailroutablepage_tags wagtailimages_tags %}
 
 {% block content %}
 
@@ -8,12 +8,10 @@
         {% image self.banner_image width-1500 as img %}
 
         {# Display Banner #}
-        <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: cover; height: 500px ; background-position: center center ; color: #fff !important"></div>
+        <div class="jumbotron"
+             style="background-image: url('{{ img.url }}'); background-size: cover; height: 500px ; background-position: center center ; color: #fff !important"></div>
 
-    <h1> {{ self.custom_title }}</h1>
-
-
-     <p>Is Like: {{ is_like }}</p>
+        <h1> {{ self.custom_title }}</h1>
 
         {% if request.user.is_authenticated %}
 
@@ -22,248 +20,235 @@
 
             {% else %}
 
-                 <a href="{% url 'like_event_add' self.id %}" class="">like</a>
-                {% endif %}
-
-             {% else %}
-                <a href="{% url 'account_login' %}" class=""> Like</a>
-
-        {% endif %}
-
-      {#    Comment sections#}
-    <div class="container">
-         <div class="col-md-7">
-
-        <h2> Comments sections </h2>
-
-         {% with allcomments.count as total_comments %}
-          <h3>
-            {{ total_comments }} comment{{ total_comments|pluralize }}
-          </h3>
-          {% endwith %}
-        </div>
-
-        {% load mptt_tags %}
-
-        <div>
-        {% recursetree comments %}
-        <div id="{{ node.id }}" class="my-2 p-2" style="border: 1px solid grey">
-          <div class="d-flex justify-content-between">
-              {{ node.user.first_name }} {{ node.user.last_name }}
-              <div></div>
-              {{ node.publish }}
-          </div>
-
-          <div>{{ node.content }}</div>
-
-          <hr />
-          {% if node.level < 3 %}
-          <button class="button" onclick="myFunction({{ node.id }})">Reply</button>
-          {% endif %}
-        </div>
-
-        {% if not node.is_leaf_node %}
-        <div class="children pl-2 pl-md-5">
-          {{ children }}
-        </div>
-        {% endif %}
-        {% endrecursetree %}
-      </div>
-
-      <div class="py-4">
-        <nav aria-label="Page navigation example">
-          {% if comments.has_other_pages %}
-          <ul class="pagination">
-            {% if comments.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}">Previous</a>
-            </li>
-            {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                <a href="{% url 'like_event_add' self.id %}" class="">like</a>
             {% endif %}
-            {% for num in comments.paginator.page_range %}
-            {% if comments.number == l %}
-            <li class="page-item active"><span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
-            </li>
-            {% else %}
-            <li><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-            {% endif %}
-            {% endfor %}
-            {% if comments.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ comments.next_page_number }}">Next</a></li>
-            {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-            {% endif %}
-          </ul>
-          {% endif %}
-        </nav>
-      </div>
 
-{#        <div id="myDIV" style="display:block;">#}
-{#            <form id="myForm" method="post">#}
-{#              <h2>Create new comment</h2>#}
-{#              {{ comment_form.as_p }}#}
-{#              {% csrf_token %}#}
-{#              <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>#}
-{#            </form>#}
-{#          </div>#}
-
-    {% if request.user.is_authenticated %}
-
-    <div id="myDIV" style="display:block;">
-            <form id="myForm" method="post">
-              <h2>Create new comment</h2>
-              {{ comment_form.as_p }}
-              {% csrf_token %}
-              <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
-            </form>
-          </div>
         {% else %}
-        <h3>Hide create comment btn</h3>
-    {% endif %}
+            <a href="{% url 'account_login' %}" class=""> Like</a>
+
+        {% endif %}
+
+        {#    Comment sections#}
+        <div class="container">
+
+            {#        <div class="col-md-7">#}
+            {##}
+            {#        <h2> Comments sections </h2>#}
+            {##}
+            {#         {% with allcomments.count as total_comments %}#}
+            {#          <h3>#}
+            {#            {{ total_comments }} comment{{ total_comments|pluralize }}#}
+            {#          </h3>#}
+            {#          {% endwith %}#}
+            {#        </div>#}
+
+            {#        {% load mptt_tags %}#}
+            {##}
+            {#        <div>#}
+            {#        {% recursetree comments %}#}
+            {#        <div id="{{ node.id }}" class="my-2 p-2" style="border: 1px solid grey">#}
+            {#          <div class="d-flex justify-content-between">#}
+            {#              {{ node.user.first_name }} {{ node.user.last_name }}#}
+            {#              <div></div>#}
+            {#              {{ node.publish }}#}
+            {#          </div>#}
+            {##}
+            {#          <div>{{ node.content }}</div>#}
+            {##}
+            {#          <hr />#}
+            {#          {% if node.level < 3 %}#}
+            {#          <button class="button" onclick="myFunction({{ node.id }})">Reply</button>#}
+            {#          {% endif %}#}
+            {#        </div>#}
+            {##}
+            {#        {% if not node.is_leaf_node %}#}
+            {#        <div class="children pl-2 pl-md-5">#}
+            {#          {{ children }}#}
+            {#        </div>#}
+            {#        {% endif %}#}
+            {#        {% endrecursetree %}#}
+            {#      </div>#}
+            {##}
+            {#      <div class="py-4">#}
+            {#        <nav aria-label="Page navigation example">#}
+            {#          {% if comments.has_other_pages %}#}
+            {#          <ul class="pagination">#}
+            {#            {% if comments.has_previous %}#}
+            {#            <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}">Previous</a>#}
+            {#            </li>#}
+            {#            {% else %}#}
+            {#            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>#}
+            {#            {% endif %}#}
+            {#            {% for num in comments.paginator.page_range %}#}
+            {#            {% if comments.number == l %}#}
+            {#            <li class="page-item active"><span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>#}
+            {#            </li>#}
+            {#            {% else %}#}
+            {#            <li><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>#}
+            {#            {% endif %}#}
+            {#            {% endfor %}#}
+            {#            {% if comments.has_next %}#}
+            {#            <li class="page-item"><a class="page-link" href="?page={{ comments.next_page_number }}">Next</a></li>#}
+            {#            {% else %}#}
+            {#            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>#}
+            {#            {% endif %}#}
+            {#          </ul>#}
+            {#          {% endif %}#}
+            {#        </nav>#}
+            {#      </div>#}
+
+            {#        <div id="myDIV" style="display:block;">#}
+            {#            <form id="myForm" method="post">#}
+            {#              <h2>Create new comment</h2>#}
+            {#              {{ comment_form.as_p }}#}
+            {#              {% csrf_token %}#}
+            {#              <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>#}
+            {#            </form>#}
+            {#          </div>#}
 
 
-    </div>
+        </div>
 
 
 
 
-    {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
 
-      {% if fav %}
-      <div>
-        <a href="{% url 'favourite_event_add' self.id %}" class="">Remove
-          Favourties</a>
-      </div>
-      {% else %}
-      <div>
-        <a href="{% url 'favourite_event_add' self.id %}" class="">Add to
-          Favourties</a>
-      </div>
-      {% endif %}
+            {% if fav %}
+                <div>
+                    <a href="{% url 'favourite_event_add' self.id %}" class="">Remove
+                        Favourties</a>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{% url 'favourite_event_add' self.id %}" class="">Add to
+                        Favourties</a>
+                </div>
+            {% endif %}
 
-      {% else %}
-      <div>
-        <a href="{% url 'account_login' %}" class="">Add to
-          Favourties</a>
-      </div>
-      {% endif %}
+        {% else %}
+            <div>
+                <a href="{% url 'account_login' %}" class="">Add to
+                    Favourties</a>
+            </div>
+        {% endif %}
 
 
-    <div class="card-footer text-muted">
+        <div class="card-footer text-muted">
             <div class="row">
                 <div class="col-lg-6 text-left">
                     Category: {{ self.category }}
                 </div> <!--col-lg-6 text-left-->
 
                 <div class="col-lg-6 text-right">
-                    <i class="fas fa-book-open"></i> Published {{self.published_datetime}}
+                    <i class="fas fa-book-open"></i> Published {{ self.published_datetime }}
                 </div> <!--col-lg-6 text-left-->
 
             </div> <!--row-->
         </div> <!--card-footer text-muted-->
 
 
-    <div class="container mt-5 mb-5">
-        <div class="text-center">
-            {% if self.categories.count %}
-                <div style="padding: 0 20px 20px">
-                    {% for cat in self.categories.all %}
-                        <a href="?category={{ cat.slug }}">
-                            {{ cat.name }}
-                        </a>{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
+        <div class="container mt-5 mb-5">
+            <div class="text-center">
+                {% if self.categories.count %}
+                    <div style="padding: 0 20px 20px">
+                        {% for cat in self.categories.all %}
+                            <a href="?category={{ cat.slug }}">
+                                {{ cat.name }}
+                            </a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
                     </div>
-            {% endif %}
+                {% endif %}
 
-            <div class="d-flex justify-content-center">
-                {% for iter in self.authors.all %}
-                {% image iter.author.image fill-50x50 as img %}
-                <div>
-                    <div>
-                        <img src="{{ img.url }}" class="rounded-circle" alt="{{ iter.author.name }}">
-                    </div>
-                    {% if iter.author.website %}
-                        <a href="{{ iter.author.website }}">
-                            {{ iter.author.name }}
-                        </a>
-                    {% else %}
-                        {{ iter.author.name }}
-                    {% endif %}
-                    </div>
-                {% endfor %}
+                <div class="d-flex justify-content-center">
+                    {% for iter in self.authors.all %}
+                        {% image iter.author.image fill-50x50 as img %}
+                        <div>
+                            <div>
+                                <img src="{{ img.url }}" class="rounded-circle" alt="{{ iter.author.name }}">
+                            </div>
+                            {% if iter.author.website %}
+                                <a href="{{ iter.author.website }}">
+                                    {{ iter.author.name }}
+                                </a>
+                            {% else %}
+                                {{ iter.author.name }}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
 
         <div>
             <ul class="list-group">
-              <li href="#" class="list-group-item list-group-item-action active">
-                Event Date & Time
-              </li>
+                <li href="#" class="list-group-item list-group-item-action active">
+                    Event Date & Time
+                </li>
 
-              <li href="#" class="list-group-item list-group-item-action">Date: {{ self.date }}</li>
-              <li href="#" class="list-group-item list-group-item-action">Time: {{ self.time }}</li>
+                <li href="#" class="list-group-item list-group-item-action">Date: {{ self.date }}</li>
+                <li href="#" class="list-group-item list-group-item-action">Time: {{ self.time }}</li>
             </ul>
 
-             <ul class="list-group">
-                  <li href="#" class="list-group-item list-group-item-action active">
+            <ul class="list-group">
+                <li href="#" class="list-group-item list-group-item-action active">
                     Detail
-                  </li>
-                  <li href="#" class="list-group-item list-group-item-action">
-                      speaker:
-                      {% for speaker in self.speakers.all  %}
-                          {{ speaker.name }},
-                      {% endfor %}
-                  </li>
-                  <li href="#" class="list-group-item list-group-item-action">
-                      Host: {{ self.host }}
-                  </li>
-                 <li href="#" class="list-group-item list-group-item-action">
-                      Co-Host: {{ self.co_host }}
-                 </li>
-             <li href="#" class="list-group-item list-group-item-action">
-                      Address: {{ self.address }}
-                 </li>
-             <li href="#" class="list-group-item list-group-item-action">
-                      City: {{ self.city }}
-                 </li>
-             <li href="#" class="list-group-item list-group-item-action">
-                      Country: {{ self.country }}
-                 </li>
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    speaker:
+                    {% for speaker in self.speakers.all %}
+                        {{ speaker.name }},
+                    {% endfor %}
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Host: {{ self.host }}
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Co-Host: {{ self.co_host }}
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Address: {{ self.address }}
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    City: {{ self.city }}
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Country: {{ self.country }}
+                </li>
 
-             </ul>
+            </ul>
 
-        <ul class="list-group">
-                  <li href="#" class="list-group-item list-group-item-action active">
+            <ul class="list-group">
+                <li href="#" class="list-group-item list-group-item-action active">
                     Contact
-                  </li>
+                </li>
 
-                  <li href="#" class="list-group-item list-group-item-action">
-                      Mobile: {{ self.mobile }}
-                  </li>
-                 <li href="#" class="list-group-item list-group-item-action">
-                      Email: {{ self.email }}
-                 </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Mobile: {{ self.mobile }}
+                </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Email: {{ self.email }}
+                </li>
 
-            <li href="#" class="list-group-item list-group-item-action">
-                      Contact Link: {{ self.link }}
-                 </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Contact Link: {{ self.link }}
+                </li>
 
-            <li href="#" class="list-group-item list-group-item-action">
-                      Submit Form Link: {{ self.submit_form_link }}
-                 </li>
+                <li href="#" class="list-group-item list-group-item-action">
+                    Submit Form Link: {{ self.submit_form_link }}
+                </li>
 
 
-        </ul>
+            </ul>
 
 
             {% if self.more_detail %}
-             <ul class="list-group">
-                  <li href="#" class="list-group-item list-group-item-action active">
-                    More
-                  </li>
-                  <li href="#" class="list-group-item list-group-item-action">{{ self.more_detail |richtext}} </li>
+                <ul class="list-group">
+                    <li href="#" class="list-group-item list-group-item-action active">
+                        More
+                    </li>
+                    <li href="#" class="list-group-item list-group-item-action">{{ self.more_detail |richtext }} </li>
                 </ul>
             {% endif %}
 
@@ -276,14 +261,100 @@
     </div>
 
     <div class="row">
-            <div class="col-lg-8 offset-lg-2">
-                {% for block in self.content %}
-                    {% include_block block %}
-                {% endfor %}
-            </div>
+        <div class="col-lg-8 offset-lg-2">
+            {% for block in self.content %}
+                {% include_block block %}
+            {% endfor %}
+        </div>
     </div>
 
 
 
-     <br/>
+    <br/>
+
+    <div class="container">
+
+        <div class="col-md-7">
+
+            <h2> Comments sections </h2>
+
+            {% with allcomments.count as total_comments %}
+                <h3>
+                    {{ total_comments }} comment{{ total_comments|pluralize }}
+                </h3>
+            {% endwith %}
+        </div>
+
+        {% load mptt_tags %}
+
+        <div>
+            {% recursetree comments %}
+                <div id="{{ node.id }}" class="my-2 p-2" style="border: 1px solid grey">
+                    <div class="d-flex justify-content-between">
+                        {{ node.user.first_name }} {{ node.user.last_name }}
+                        <div></div>
+                        {{ node.publish }}
+                    </div>
+
+                    <div>{{ node.content }}</div>
+
+                    <hr/>
+                    {% if node.level < 3 %}
+                        <button class="button" onclick="myFunction({{ node.id }})">Reply</button>
+                    {% endif %}
+                </div>
+
+                {% if not node.is_leaf_node %}
+                    <div class="children pl-2 pl-md-5">
+                        {{ children }}
+                    </div>
+                {% endif %}
+            {% endrecursetree %}
+        </div>
+
+        <div class="py-4">
+            <nav aria-label="Page navigation example">
+                {% if comments.has_other_pages %}
+                    <ul class="pagination">
+                        {% if comments.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}">Previous</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        {% endif %}
+                        {% for num in comments.paginator.page_range %}
+                            {% if comments.number == l %}
+                                <li class="page-item active"><span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
+                                </li>
+                            {% else %}
+                                <li><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if comments.has_next %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ comments.next_page_number }}">Next</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </nav>
+        </div>
+
+         {% if request.user.is_authenticated %}
+
+                <div id="myDIV" style="display:block;">
+                    <form id="myForm" method="post">
+                        <h2>Create new comment</h2>
+                        {{ comment_form.as_p }}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                    </form>
+                </div>
+            {% else %}
+                <h3>Hide create comment btn</h3>
+            {% endif %}
+    </div>
+
+
 {% endblock content %}

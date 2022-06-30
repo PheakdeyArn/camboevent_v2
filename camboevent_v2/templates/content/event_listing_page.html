@@ -4,12 +4,6 @@
 
 {% block content %}
 
-    <div class="container">
-         <a href="?category={{ "Education" }}&page={{ 1 }}" class="page-link">
-            Test Param
-        </a>
-    </div>
-
     <div class="container-fluid pb-4 pt-4 paddding">
     <div class="container paddding">
         <div class="row mx-0">
@@ -41,6 +35,27 @@
 
             <div class="col-md-3 animate-box" data-animate-effect="fadeInRight">
                 <div>
+                    <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Category</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="fh5co_tags_all">
+{#                    <a href="#" class="fh5co_tagg">Business</a>#}
+
+                    {% if categories %}
+                        <form action="/action_page.php" method="get">
+
+                         {% for category in categories %}
+                            <input type="checkbox" name="vehicle1" value="Bike">
+                             <label for="vehicle1">{{ category.name }}</label><br>
+                        {% endfor %}
+                        </form>
+                        {% else %}
+                        <p>No Category</p>
+                    {% endif %}
+
+                </div>
+
+                <div>
                     <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
                 </div>
                 <div class="clearfix"></div>
@@ -59,25 +74,7 @@
                     <a href="#" class="fh5co_tagg">Three</a>
                 </div>
 
-                <div>
-                    <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Category</div>
-                </div>
                 <div class="clearfix"></div>
-
-                <div class="fh5co_tags_all">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">
-                        Category 1
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                      <label class="form-check-label" for="flexCheckChecked">
-                        Category 2
-                      </label>
-                    </div>
-                </div>
 
                 <div>
                     <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>

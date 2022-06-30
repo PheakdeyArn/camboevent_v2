@@ -56,6 +56,8 @@ class BlogListingPage(RoutablePageMixin, Page):
         # in order to access child properties, such as youtube_video_id and subtitle
         # context["posts"] = BlogDetailPage.objects.live().public()
 
+        categories = BlogCategory.objects.all().order_by('name')
+
         if self.category.slug not in ['all', "All"]:
             all_posts = BlogDetailPage.objects.filter(categories=self.category.id).live().public().order_by('-first_published_at')
 
@@ -80,14 +82,16 @@ class BlogListingPage(RoutablePageMixin, Page):
 
         context["posts"] = posts
         context["page_title"] = "Blog List"
+        context["categories"] = categories
         context["special_link"] = self.reverse_subpage('latest_post')
         return context
 
     @route(r'^latest/?$', name="latest_post")
     def show_latest_blog(self, request, *arg, **kwarg):
+
         context = self.get_context(request, *arg, **kwarg)
         context['posts'] = context['posts'][:1]
-        context["categories"] = BlogCategory.objects.all()
+        context["categories"] = BlogCategory.objects.all().order_by('name')
         context["page_title"] = "Latest Blog List"
 
         return render(request, "blog/latest_blog.html", context)

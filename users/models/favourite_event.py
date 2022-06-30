@@ -25,4 +25,4 @@ class FavouriteEvent(models.Model):
         # ordering = ['city']
 
 
-register_snippet(FavouriteEvent)
+# register_snippet(FavouriteEvent)
